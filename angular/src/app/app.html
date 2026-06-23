@@ -1,0 +1,91 @@
+<!-- Decorative Grid Overlay & Background Glow -->
+<div class="grid-overlay"></div>
+<div class="blur-blob"></div>
+
+<header>
+  <h1>Thakol Integration</h1>
+  <p>Angular SPA OAuth2/OIDC Quickstart</p>
+</header>
+
+<main>
+  <!-- State 1: Logged Out -->
+  <div *ngIf="!isAuthenticated" class="card">
+    <h2 class="card-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-blue); vertical-align: middle;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      Configure OIDC & Login
+    </h2>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">
+      Configure your OIDC realm credentials below to authenticate. Settings are persisted in local browser storage.
+    </p>
+
+    <div class="form-group">
+      <label class="form-label" for="authorityUrl">Authority / Realm URL</label>
+      <input 
+        class="form-control" 
+        type="url" 
+        id="authorityUrl" 
+        name="authorityUrl"
+        [(ngModel)]="authorityUrl"
+        placeholder="https://auth.thakol.io/realms/YOUR_REALM"
+      >
+      <span style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; display: block;">
+        E.g. <code>https://auth.thakol.io/realms/demo</code> or <code>http://localhost:8080/realms/demo</code>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="clientId">Client ID</label>
+      <input 
+        class="form-control" 
+        type="text" 
+        id="clientId" 
+        name="clientId"
+        [(ngModel)]="clientId"
+        placeholder="default-client"
+      >
+    </div>
+
+    <button (click)="login()" class="btn btn-primary" style="margin-top: 10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Sign In with Thakol
+    </button>
+  </div>
+
+  <!-- State 2: Logged In -->
+  <div *ngIf="isAuthenticated" class="card">
+    <div class="token-header" style="margin-bottom: 24px;">
+      <div class="badge">Angular Authenticated</div>
+      <button (click)="logout()" class="btn btn-secondary" style="width: auto; padding: 8px 16px; font-size: 0.85rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Sign Out
+      </button>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-avatar">{{ givenName.charAt(0).toUpperCase() }}</div>
+      <div class="profile-info">
+        <h3>{{ givenName }}</h3>
+        <p>{{ email }}</p>
+        <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
+          Session Expiry: <span style="color: var(--text-secondary);">{{ expiresAt }}</span>
+        </p>
+      </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+    <div class="token-container">
+      <div class="token-header">
+        <span class="token-title">Decoded Profile Claims (ID Token)</span>
+      </div>
+      <pre><code>{{ claimsJson }}</code></pre>
+    </div>
+
+    <div class="token-container">
+      <div class="token-header">
+        <span class="token-title">Raw Access Token (JWT)</span>
+      </div>
+      <pre style="word-break: break-all; white-space: pre-wrap;"><code style="color: var(--text-secondary);">{{ accessToken }}</code></pre>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thakol.io — Vanilla JS OIDC Sample</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- Decorative Grid Overlay & Background Glow -->
+  <div class="grid-overlay"></div>
+  <div class="blur-blob"></div>
+
+  <header>
+    <h1>Thakol Integration</h1>
+    <p>Vanilla JavaScript SPA OAuth2/OIDC Quickstart</p>
+  </header>
+
+  <main>
+    <!-- State 1: Loading Screen -->
+    <div id="loading-state" class="card">
+      <div style="text-align: center; padding: 20px;">
+        <p style="color: var(--text-secondary);">Initializing authentication flow...</p>
+      </div>
+    </div>
+
+    <!-- State 2: Logged Out -->
+    <div id="logged-out-state" class="card hidden">
+      <h2 class="card-title">Setup & Sign In</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px;">
+        Configure your OIDC credentials below. The configuration is stored locally in your browser's localStorage for easy testing.
+      </p>
+
+      <div class="form-group">
+        <label class="form-label" for="realm-url">Authority / Realm URL</label>
+        <input 
+          class="form-control" 
+          type="url" 
+          id="realm-url" 
+          placeholder="https://auth.thakol.io/realms/YOUR_REALM"
+        >
+        <span style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; display: block;">
+          E.g. <code>https://auth.thakol.io/realms/demo</code> or <code>http://localhost:8080/realms/demo</code>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="client-id">Client ID</label>
+        <input 
+          class="form-control" 
+          type="text" 
+          id="client-id" 
+          placeholder="default-client"
+        >
+      </div>
+
+      <button id="login-btn" class="btn btn-primary" style="margin-top: 10px;">
+        Sign In with Thakol
+      </button>
+    </div>
+
+    <!-- State 3: Logged In -->
+    <div id="logged-in-state" class="card hidden">
+      <div class="token-header" style="margin-bottom: 24px;">
+        <div class="badge">Authenticated</div>
+        <button id="logout-btn" class="btn btn-secondary" style="width: auto; padding: 8px 16px; font-size: 0.85rem;">
+          Sign Out
+        </button>
+      </div>
+
+      <div class="profile-grid">
+        <div id="profile-avatar" class="profile-avatar">U</div>
+        <div class="profile-info">
+          <h3 id="profile-name">User Name</h3>
+          <p id="profile-email">email@domain.com</p>
+          <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
+            Session Expires: <span id="session-expires" style="color: var(--text-secondary);">Never</span>
+          </p>
+        </div>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+      <div class="token-container">
+        <div class="token-header">
+          <span class="token-title">Decoded Profile Claims (ID Token)</span>
+        </div>
+        <pre><code id="claims-box">{}</code></pre>
+      </div>
+
+      <div class="token-container">
+        <div class="token-header">
+          <span class="token-title">Raw Access Token (JWT)</span>
+        </div>
+        <pre style="word-break: break-all; white-space: pre-wrap;"><code id="token-box" style="color: var(--text-secondary);">None</code></pre>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
