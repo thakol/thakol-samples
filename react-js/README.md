@@ -50,5 +50,6 @@ sign-in tab if your app stores state per tab), then confirm sign-in. Keep callba
 PKCE validation. For signup, enable the selected method's signup permission plus self-registration.
 
 Follow [the shared acceptance checklist](../PASSWORDLESS.md) and check the
-[current roadmap](https://thakol.io/roadmap) for mandatory-MFA enrollment coverage. Enrolled users
-are challenged; existing unenrolled application users are a known rollout gap being corrected.
+[current roadmap](https://thakol.io/roadmap) for rollout status. Required MFA enrolls existing and
+new users before returning the authorization code. Enabling or repairing it ends older application
+SSO sessions once; optional MFA challenges enrolled users without forcing enrollment.

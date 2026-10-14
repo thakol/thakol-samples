@@ -13,8 +13,10 @@ and session state on the server. The authentication method is chosen on the host
 5. Confirm the application validates callback state and completes its normal code exchange,
    then obtains a verified-email profile. APIs still verify JWT signature, issuer, audience and expiry.
 6. Try invalid/expired proof, resend, replay, disabled user, password fallback and logout.
-7. Test both enrolled and unenrolled users when MFA is required. The existing-user mandatory
-   enrollment gap is currently being fixed; a successful enrolled-user check alone is insufficient.
+7. Test enrolled and unenrolled users when MFA is required: enrollment must precede the
+   authorization code, invalid TOTP must fail, and valid TOTP must complete sign-in. Enabling or
+   repairing mandatory MFA ends older application SSO sessions once; optional MFA allows
+   unenrolled users to sign in.
 8. If signup is wanted, enable that method's separate signup checkbox and application
    self-registration. Prove no account exists before verification and one exists after success.
 9. Check dashboard usage for successful auth. Send/resend/preview/failure are not usage events;
