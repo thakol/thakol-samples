@@ -37,7 +37,9 @@ function createUserManager(authorityUrl, clientUuid) {
     post_logout_redirect_uri: window.location.origin,
     response_type: "code",
     scope: "openid profile email",
-    userStore: new WebStorageStateStore({ store: window.localStorage }),
+    // Preserve pending state/PKCE across tabs in the original browser profile for email links.
+      stateStore: new WebStorageStateStore({ store: window.localStorage }),
+      userStore: new WebStorageStateStore({ store: window.localStorage }),
     automaticSilentRenew: true,
   });
 }
@@ -55,7 +57,7 @@ async function initAuth() {
       loadingState.classList.remove("hidden");
       
       const user = await userManager.signinRedirectCallback();
-      console.log("Logged in successfully:", user);
+      // Do not log the user object: it contains bearer tokens.
       
       // Clean query parameters from address bar
       window.history.replaceState({}, document.title, window.location.pathname);

@@ -33,14 +33,14 @@ cp .env.example .env.local
 
 Modify the environment variables inside `.env.local`:
 * `KEYCLOAK_CLIENT_ID` — Your client ID registered in Thakol dashboard (e.g. `default-client`).
-* `KEYCLOAK_CLIENT_SECRET` — The client secret (required if your client is set to confidential, leave empty if public).
+* `KEYCLOAK_CLIENT_SECRET` — The server-only client secret for this sample's confidential OIDC client.
 * `KEYCLOAK_ISSUER` — E.g. `https://auth.thakol.io/realms/your-realm` or `http://localhost:8080/realms/your-realm`
 * `NEXTAUTH_SECRET` — A random secret string used to encrypt NextAuth cookies (e.g. run `openssl rand -base64 32`).
 
 ### Step 3: Configure Redirect URIs in Thakol
 Log into your **Thakol Developer Console** and ensure your Client has:
 * **Redirect URI:** `http://localhost:3000/api/auth/callback/keycloak`
-* **Web Origins (CORS):** `http://localhost:3000` or `*`
+* **Web Origins (CORS):** `http://localhost:3000` (exact origin; avoid wildcard origins)
 
 ### Step 4: Run the Development Server
 Launch the Next.js server:
@@ -48,3 +48,16 @@ Launch the Next.js server:
 npm run dev
 ```
 Open `http://localhost:3000` in your browser.
+
+
+## Email OTP and email links
+
+This sample's existing OIDC login also supports the hosted email-code and email-link methods.
+Enable them in the workspace's Advanced → Sign-In Methods settings; no new token endpoint or
+client secret in the browser is needed. Open links in the original browser/profile (and original
+sign-in tab if your app stores state per tab), then confirm sign-in. Keep callback state and
+PKCE validation. For signup, enable the selected method's signup permission plus self-registration.
+
+Follow [the shared acceptance checklist](../PASSWORDLESS.md) and check the
+[current roadmap](https://thakol.io/roadmap) for mandatory-MFA enrollment coverage. Enrolled users
+are challenged; existing unenrolled application users are a known rollout gap being corrected.

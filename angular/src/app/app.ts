@@ -15,26 +15,25 @@ export class App implements OnInit {
   constructor(private oauthService: OAuthService) {}
 
   ngOnInit() {
-    this.configureAuth(this.authorityUrl, this.clientId);
+    void this.configureAuth(this.authorityUrl, this.clientId).catch(() => {});
   }
 
-  private configureAuth(authority: string, client: string) {
+  private async configureAuth(authority: string, client: string) {
     const config = getAuthConfig(authority, client);
     this.oauthService.configure(config);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-      console.log('OIDC initialization complete');
-    }).catch(err => {
-      console.error('OIDC discovery load failed:', err);
-    });
+    await this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
-  login() {
+  async login() {
     localStorage.setItem('thakol_authority', this.authorityUrl);
     localStorage.setItem('thakol_client_id', this.clientId);
-    
-    // Configure flow and run login
-    this.configureAuth(this.authorityUrl, this.clientId);
-    this.oauthService.initCodeFlow();
+    try {
+      // Wait for the selected issuer's discovery before creating the code/PKCE request.
+      await this.configureAuth(this.authorityUrl, this.clientId);
+      this.oauthService.initCodeFlow();
+    } catch {
+      console.error('OIDC initialization failed. Check issuer and client configuration.');
+    }
   }
 
   logout() {
