@@ -88,9 +88,9 @@ require confirmation in the original browser/profile. If state is stored per tab
 original sign-in tab. The React and Vanilla JS samples explicitly share pending OIDC state for a callback
 opened in another tab of the same profile; Angular uses the original sign-in tab; never clear it while waiting for the email.
 
-Current MFA limitation: enrolled users are challenged, but mandatory enrollment for existing
-unenrolled application users is being corrected. Test those users before relying on universal
-MFA. Passkeys, SMS and guided SAML are planned.
+Required MFA enrolls existing and new application users before the authorization code is issued.
+Enabling or repairing it ends older application SSO sessions once. Optional MFA challenges enrolled
+users without forcing enrollment. Test both enrolled and unenrolled users. Passkeys, SMS and guided SAML are planned.
 
 See [OTP setup](https://thakol.io/docs/email-otp), [link setup](https://thakol.io/docs/email-links),
 and the [acceptance checklist](./PASSWORDLESS.md). Samples are development tools: do not copy
