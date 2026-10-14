@@ -59,3 +59,16 @@ You can verify token-based authorization on the REST API `/api/data` endpoint us
 curl -H "Authorization: Bearer <YOUR_ACCESS_TOKEN>" http://localhost:3003/api/data
 ```
 The server will verify the signature dynamically using Thakol's JSON Web Key Set (JWKS) keys and respond with the authenticated payload metadata!
+
+
+## Email OTP and email links
+
+This sample's existing OIDC login also supports the hosted email-code and email-link methods.
+Enable them in the workspace's Advanced → Sign-In Methods settings; no new token endpoint or
+client secret in the browser is needed. Open links in the original browser/profile (and original
+sign-in tab if your app stores state per tab), then confirm sign-in. Keep callback state and
+PKCE validation. For signup, enable the selected method's signup permission plus self-registration.
+
+Follow [the shared acceptance checklist](../PASSWORDLESS.md) and check the
+[current roadmap](https://thakol.io/roadmap) for mandatory-MFA enrollment coverage. Enrolled users
+are challenged; existing unenrolled application users are a known rollout gap being corrected.

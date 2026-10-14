@@ -20,12 +20,12 @@ export function getAuthConfig(authorityUrl: string, clientUuid: string): AuthCon
     // Scope for the permissions requested
     scope: 'openid profile email',
 
-    showDebugInformation: true,
+    showDebugInformation: false,
 
     // Enable PKCE flow
     useSilentRefresh: true,
     
     // Allow HTTP during local development
-    requireHttps: false,
+    requireHttps: 'remoteOnly',
   };
 }

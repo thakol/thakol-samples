@@ -23,6 +23,8 @@ export function AuthProvider({ children }) {
       post_logout_redirect_uri: window.location.origin,
       response_type: "code",
       scope: "openid profile email",
+      // Preserve pending state/PKCE across tabs in the original browser profile for email links.
+      stateStore: new WebStorageStateStore({ store: window.localStorage }),
       userStore: new WebStorageStateStore({ store: window.localStorage }),
       automaticSilentRenew: true,
     });
@@ -43,6 +45,8 @@ export function AuthProvider({ children }) {
       post_logout_redirect_uri: window.location.origin,
       response_type: "code",
       scope: "openid profile email",
+      // Preserve pending state/PKCE across tabs in the original browser profile for email links.
+      stateStore: new WebStorageStateStore({ store: window.localStorage }),
       userStore: new WebStorageStateStore({ store: window.localStorage }),
       automaticSilentRenew: true,
     });
