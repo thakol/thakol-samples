@@ -25,3 +25,9 @@ and session state on the server. The authentication method is chosen on the host
 Never log or share passwords, codes, links, callback authorization codes or full tokens. Do not
 commit real configuration or mailbox credentials. No inbox delivery is claimed merely because
 SMTP accepts the message; record actual receipt and the real application callback.
+
+
+When testing real mail, inspect **Dashboard → Email Delivery** for the controlled recipient.
+Confirm Send and Delivery events, then verify the actual code or link through the original
+browser and application callback. Delivery alone does not prove the callback or inbox opening.
+No event may indicate an SMTP failure before acceptance; contact the platform operator.
