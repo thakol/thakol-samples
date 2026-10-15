@@ -95,3 +95,9 @@ users without forcing enrollment. Test both enrolled and unenrolled users. Passk
 See [OTP setup](https://thakol.io/docs/email-otp), [link setup](https://thakol.io/docs/email-links),
 and the [acceptance checklist](./PASSWORDLESS.md). Samples are development tools: do not copy
 raw-token displays, debug logs or development-only HTTP settings into a production application.
+
+
+For missing authentication emails, use **Dashboard → Email Delivery** in the Thakol workspace
+console. This uses a workspace administrator/member session, not your application's user token.
+Send and Delivery events help distinguish sending from recipient-mail-server acceptance; they
+do not prove inbox opening. See [delivery guidance](https://thakol.io/docs/email-delivery).
