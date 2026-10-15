@@ -101,3 +101,26 @@ For missing authentication emails, use **Dashboard → Email Delivery** in the T
 console. This uses a workspace administrator/member session, not your application's user token.
 Send and Delivery events help distinguish sending from recipient-mail-server acceptance; they
 do not prove inbox opening. See [delivery guidance](https://thakol.io/docs/email-delivery).
+
+## Managed social login and CAPTCHA
+
+Configure social providers in **Dashboard → Login & Bot Protection** using Thakol defaults or
+your own credentials, or explicitly disable a provider. CAPTCHA has the same three choices:
+none, Thakol reCAPTCHA v3 keys, or your own domain-matched keys. Availability depends on
+platform setup and installed providers; Apple needs an additional provider installation.
+
+Every sample continues using the customer realm's OIDC issuer and app client. Never place
+social-provider or CAPTCHA secrets in these samples, or change the issuer to a shared broker realm.
+Mandatory MFA is handled on the hosted page after social sign-in.
+
+For the `oidc-client-ts` samples, optionally select a configured provider through the existing
+`UserManager` instance; its callback handling, state and PKCE validation stay in place:
+
+```js
+await userManager.signinRedirect({
+  extraQueryParams: { kc_idp_hint: 'google' },
+});
+```
+
+The alias must be enabled in your realm. A provider hint selects the login experience and is
+not an access-control boundary. See [managed authentication setup](https://thakol.io/docs/managed-auth).
